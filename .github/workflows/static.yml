@@ -37,16 +37,15 @@ jobs:
  # Job for deploying to GitHub Pages
   deploy:
     # Depends on completion of the 'test' job
-   # needs: build
-    # Runs the job on Ubuntu environment
-    runs-on: ubuntu-latest
+    needs: build
+
     # Define the environment for deployment
     environment:
       name: github-pages  # Name of the deployment environment
       url: ${{ steps.deployment.outputs.page_url }}  # URL for deployed GitHub Pages
 
     # Runs the job on Ubuntu environment
-   # runs-on: ubuntu-latest
+    runs-on: ubuntu-latest
 
     # Steps to execute within the deployment job
     steps:
