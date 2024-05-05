@@ -38,7 +38,8 @@ jobs:
   deploy:
     # Depends on completion of the 'test' job
    # needs: build
-
+    # Runs the job on Ubuntu environment
+    runs-on: ubuntu-latest
     # Define the environment for deployment
     environment:
       name: github-pages  # Name of the deployment environment
