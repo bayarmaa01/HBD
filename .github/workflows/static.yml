@@ -97,7 +97,7 @@ jobs:
  # Job for deploying to GitHub Pages
   deploy:
     # Depends on completion of the 'test' job
-    needs: test
+    needs: build
 
     # Define the environment for deployment
     environment:
