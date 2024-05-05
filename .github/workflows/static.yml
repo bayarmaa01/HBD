@@ -16,6 +16,51 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
+  # Job for running Selenium tests
+  test:
+    needs: sonarcloud
+    runs-on: ubuntu-latest  # Runs on Ubuntu environment
+
+    # Steps to execute within the job
+    steps:
+      # Step to checkout the repository code
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      # Step to set up Python environment
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.12"  # Version of Python to set up
+
+      # Step to install Chrome WebDriver for Selenium
+      - name: Install Chrome WebDriver
+        run: |
+          LATEST=$(wget -q -O - https://googlechromelabs.github.io/chrome-for-testing/LATEST_RELEASE_STABLE)
+          wget https://storage.googleapis.com/chrome-for-testing-public/$LATEST/linux64/chromedriver-linux64.zip
+          unzip chromedriver-linux64.zip
+          cd chromedriver-linux64
+          sudo mv chromedriver /usr/local/bin/
+          sudo chmod +x /usr/local/bin/chromedriver
+
+      # Step to install Selenium library
+      - name: Install Selenium
+        run: pip install selenium
+
+      # Step to execute Selenium tests
+      - name: Run Selenium tests
+        run: python static.py
+
+      # Step to save screenshots if tests succeed
+      - name: Save screenshot to repository
+        if: ${{ success() }}  # Condition to run only if tests succeed
+        run: |
+          git config --global user.email "actions@github.com"
+          git config --global user.name "GitHub Actions"
+          git add screenshot_*.png
+          git commit -m "Add screenshot taken during Selenium test"
+          git push
+
   build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
