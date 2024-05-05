@@ -45,7 +45,7 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}  # URL for deployed GitHub Pages
 
     # Runs the job on Ubuntu environment
-    runs-on: ubuntu-latest
+   # runs-on: ubuntu-latest
 
     # Steps to execute within the deployment job
     steps:
