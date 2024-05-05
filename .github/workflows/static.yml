@@ -34,3 +34,36 @@ jobs:
         run: |
           echo Add other actions to build,
           echo test, and deploy your project.
+ # Job for deploying to GitHub Pages
+  deploy:
+    # Depends on completion of the 'test' job
+    needs: test
+
+    # Define the environment for deployment
+    environment:
+      name: github-pages  # Name of the deployment environment
+      url: ${{ steps.deployment.outputs.page_url }}  # URL for deployed GitHub Pages
+
+    # Runs the job on Ubuntu environment
+    runs-on: ubuntu-latest
+
+    # Steps to execute within the deployment job
+    steps:
+      # Step to checkout the repository code
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Step to configure GitHub Pages deployment
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      # Step to upload the entire repository as an artifact
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: "."  # Uploads the entire repository
+
+      # Step to deploy the repository to GitHub Pages
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
