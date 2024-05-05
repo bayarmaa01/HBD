@@ -18,7 +18,7 @@ jobs:
   # This workflow contains a single job called "build"
   # Job for running Selenium tests
   test:
-    needs: sonarcloud
+    #needs: sonarcloud
     runs-on: ubuntu-latest  # Runs on Ubuntu environment
 
     # Steps to execute within the job
