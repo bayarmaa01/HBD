@@ -1,63 +1,100 @@
-<!DOCTYPE html>
-<html lang="en">
+// Image array for 2019 birthday memories
+const images = [
+    '7.jpeg', 
+    '6.jpg', 
+    '3.jpg', 
+    '4.jpeg',
+];
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mongolian National University</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
+// Stories associated with each image
+const stories = {
+    '7.jpeg': '2019 он. Жижигхэн Баяржаргал, 👩‍❤‍👨 жижигхэн Баярмаа.',
+    '6.jpg': '2021 оны 6-р сарын 3-ны өдөр, ахлах сургуулиа төгсөх өдрөө ангийнхантайгаа, мөн 2-уулаа дурсамжийн зураг авхуулсан. Бид ахлах сургуулийн бүх хугацаанд ангийн найзууд байж, найзуудын хувьд ч, эцэст нь хосууд ч байсан тоо томшгүй олон дурсамжаа хуваалцсан. Энэ өдөр инээд хөөр, сорилт бэрхшээл, мартагдашгүй олон мөчүүдийг хуваалцсан догдлолоор дүүрэн байсан.',
+    '3.jpg': '2021 оны есдүгээр сарын 18-нд Өнөөдрөөс 3 жилийн өмнө төрсөн өдрөөр чинь хамт байжээ. (Тэр үед өгсөн бэлгээс 👟 болоод зугтаад👣 явчихжээ🚶🏻‍♀️ би 😅)',
+    '4.jpeg': '2022 оны 10-р сарын 2-нд, Онгоцны буудлаас🛫 холын зайн үерхэлд шилжсэн гуниг дүүрэн өдөр.🥺🥺.',
+};
 
-<body>
+// Dynamically load images into gallery
+const gallery = document.getElementById('gallery');
 
-    <header>
-        <h1>id="timestamp"</h1>
-        <h1>Mongolian National University</h1>
-        <p>Empowering Minds, Enriching Lives</p>
-    </header>
+images.forEach(image => {
+    const imgElement = document.createElement('img');
+    imgElement.src = `images/${image}`;
+    imgElement.alt = 'Best Memory photos';
+    imgElement.loading = "lazy";
+    imgElement.onclick = () => openLightbox(`images/${image}`, stories[image]); // Pass the image and story
+    gallery.appendChild(imgElement);
+});
 
-    <nav>
-        <a href="#home">Home</a> |
-        <a href="#about">About Us</a> |
-        <a href="#courses">Courses</a> |
-        <a href="#admissions">Admissions</a> |
-        <a href="#contact">Contact Us</a>
-    </nav>
+// Lightbox for image zoom
+function openLightbox(src, story) {
+    const lightbox = document.getElementById("lightbox");
+    const lightboxImg = document.getElementById("lightbox-img");
+    const storyText = document.getElementById("story-text");
+    const lightboxStory = document.getElementById("lightbox-story");
+    
+    // Set the image source and story text
+    lightboxImg.src = src;
+    storyText.textContent = story; 
+    lightboxStory.textContent = story;
+    
+    // Show the lightbox
+    lightbox.style.display = "block";
+}
 
-    <section id="home">
-        <h2>Welcome to Mongolian National University</h2>
-        <p>Providing quality education and fostering innovation for a brighter future.</p>
-        <img src="university-image.jpg" alt="University Campus Image">
-    </section>
+// Function to close the lightbox
+function closeLightbox() {
+    const lightbox = document.getElementById("lightbox");
+    lightbox.style.display = "none";
+}
 
-    <section id="about">
-        <h2>About Us</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ac elit vel lacus eleifend venenatis.</p>
-    </section>
 
-    <section id="courses">
-        <h2>Our Courses</h2>
-        <p>Explore a diverse range of academic programs tailored to meet global standards.</p>
-        <!-- Add course information here -->
-    </section>
+// Video modal control
+const videoModal = document.getElementById('video-modal');
 
-    <section id="admissions">
-        <h2>Admissions</h2>
-        <p>Discover the admission process and requirements to join our academic community.</p>
-        <!-- Add admission details here -->
-    </section>
+function openVideo() {
+    const modal = document.getElementById("video-modal");
+    modal.style.display = "block";
+}
 
-    <section id="contact">
-        <h2>Contact Us</h2>
-        <p>Feel free to reach out for inquiries, assistance, or to visit our campus.</p>
-        <!-- Add contact information and form here -->
-    </section>
+// Function to close the video modal
+function closeVideo() {
+    const modal = document.getElementById("video-modal");
+    modal.style.display = "none";
+}
 
-    <footer>
-        <p>&copy; 2024 Mongolian National University</p>
-    </footer>
-    <script src="script.js"></script>
+// Countdown Timer
+const countdown = document.getElementById('countdown');
+const birthdayDate = new Date('September 18, 2024 00:00:00').getTime();
 
-</body>
+const countdownInterval = setInterval(() => {
+    const now = new Date().getTime();
+    const distance = birthdayDate - now;
 
-</html>
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    countdown.innerHTML = `Only ${days} days, ${hours} hours, ${minutes} minutes, and ${seconds} seconds left!`;
+
+    if (distance < 0) {
+        clearInterval(countdownInterval);
+        countdown.innerHTML = "It's Your Birthday! 🎉";
+    }
+}, 1000);
+
+function revealSecret() {
+    const pinCode = '1002'; // Your university day in a format without the dot
+    const enteredPin = document.getElementById('pinInput').value;
+
+    if (enteredPin === pinCode) {
+        document.getElementById('secretMessage').classList.remove('hidden');
+    } else {
+        alert("Код буруу байна!🙂‍↔ Арай санахгүй байгаа юм биш биз🤔");
+    }
+}
+// Start the countdown as soon as the page loads
+window.onload = function() {
+    countdown();
+};
