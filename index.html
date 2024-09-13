@@ -1,100 +1,89 @@
-// Image array for 2019 birthday memories
-const images = [
-    '7.jpeg', 
-    '6.jpg', 
-    '3.jpg', 
-    '4.jpeg',
-];
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday!</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Pangolin&display=swap" rel="stylesheet">
 
-// Stories associated with each image
-const stories = {
-    '7.jpeg': '2019 он. Жижигхэн Баяржаргал, 👩‍❤‍👨 жижигхэн Баярмаа.',
-    '6.jpg': '2021 оны 6-р сарын 3-ны өдөр, ахлах сургуулиа төгсөх өдрөө ангийнхантайгаа, мөн 2-уулаа дурсамжийн зураг авхуулсан. Бид ахлах сургуулийн бүх хугацаанд ангийн найзууд байж, найзуудын хувьд ч, эцэст нь хосууд ч байсан тоо томшгүй олон дурсамжаа хуваалцсан. Энэ өдөр инээд хөөр, сорилт бэрхшээл, мартагдашгүй олон мөчүүдийг хуваалцсан догдлолоор дүүрэн байсан.',
-    '3.jpg': '2021 оны есдүгээр сарын 18-нд Өнөөдрөөс 3 жилийн өмнө төрсөн өдрөөр чинь хамт байжээ. (Тэр үед өгсөн бэлгээс 👟 болоод зугтаад👣 явчихжээ🚶🏻‍♀️ би 😅)',
-    '4.jpeg': '2022 оны 10-р сарын 2-нд, Онгоцны буудлаас🛫 холын зайн үерхэлд шилжсэн гуниг дүүрэн өдөр.🥺🥺.',
-};
-
-// Dynamically load images into gallery
-const gallery = document.getElementById('gallery');
-
-images.forEach(image => {
-    const imgElement = document.createElement('img');
-    imgElement.src = `images/${image}`;
-    imgElement.alt = 'Best Memory photos';
-    imgElement.loading = "lazy";
-    imgElement.onclick = () => openLightbox(`images/${image}`, stories[image]); // Pass the image and story
-    gallery.appendChild(imgElement);
-});
-
-// Lightbox for image zoom
-function openLightbox(src, story) {
-    const lightbox = document.getElementById("lightbox");
-    const lightboxImg = document.getElementById("lightbox-img");
-    const storyText = document.getElementById("story-text");
-    const lightboxStory = document.getElementById("lightbox-story");
+</head>
+<body>
     
-    // Set the image source and story text
-    lightboxImg.src = src;
-    storyText.textContent = story; 
-    lightboxStory.textContent = story;
+    <div class="container">
+        <h1>To my amazing boyfriend, happy birthday! 🎉❤️</h1>
+        <h2 id="countdown">Countdown to Your Birthday...</h2>
+
+        <!-- Heart Animation -->
+        <div class="heart-animation">
+            <p>Happy 21st Birthday, BAYARJARGAL! ❤️</p>
+            <p> Хэдийгээр бид өнөөдөр хамт байхгүй ч гэсэн бидний хайр ямар ч зөрүүг гүүр болгодог. <br>
+                Чиний минь өдөр аз жаргалаар дүүрэн, бүх мөрөөдөл нь биелнэ гэж найдаж байна.<br>
+                Чамайгаа маш их санаж байна! 💌❤️"**
+
+            </p>
+        </div>
+
+<!-- Gallery for photos -->
+<div id="gallery" class="gallery-container"></div>
+
+<!-- Lightbox for image zoom and story -->
+<div id="lightbox" class="lightbox" style="display:none;">
+    <span class="close" onclick="closeLightbox()">&times;</span>
     
-    // Show the lightbox
-    lightbox.style.display = "block";
-}
-
-// Function to close the lightbox
-function closeLightbox() {
-    const lightbox = document.getElementById("lightbox");
-    lightbox.style.display = "none";
-}
+    <!-- Display the image in the lightbox -->
+    <img id="lightbox-img" class="lightbox-img">
+    
+    <!-- Display the story text below the image in the lightbox -->
+    <p id="lightbox-story" class="lightbox-story"></p>
+</div>
 
 
-// Video modal control
-const videoModal = document.getElementById('video-modal');
+<!-- Section to Display the Story -->
+<div id="story-section" class="story-section">
+    <h2>Our Story</h2>
+    <p id="story-text">Click on a photo to see the story behind it!</p>
+</div>
+        <!-- Special Video Section -->
+        <div class="media-container">
+            <img src="9.jpg" alt="Our Sweet Memory" class="memory-img" loading="lazy">
+            <button class="media-btn" onclick="openVideo()">Watch Our Special Video 🎥</button>
+        </div>
 
-function openVideo() {
-    const modal = document.getElementById("video-modal");
-    modal.style.display = "block";
-}
+        <!-- Secret Message Section -->
+        <div class="secret-section">
+            <p>Үүнийг онгойлгож, нөгөө талд нь хүлээж буй хайраар дүүрэн мессежийг олоорой. 💖🎉</p>
+            <input type="password" id="pinInput" placeholder="Enter Pin Code">
+            <button class="pin-btn" onclick="revealSecret()">Submit</button>
+        </div>
 
-// Function to close the video modal
-function closeVideo() {
-    const modal = document.getElementById("video-modal");
-    modal.style.display = "none";
-}
+        <!-- Hidden Secret Message -->
+        <div id="secretMessage" class="hidden">
+            <h1>
+                Hi babe!
+            </h1>
+            <p>🎉 Here's your special message: "You are my favorite person in the world, and I can't wait to make more memories with you! 💖" 🎉</p>
+        </div>
+    </div>
 
-// Countdown Timer
-const countdown = document.getElementById('countdown');
-const birthdayDate = new Date('September 18, 2024 00:00:00').getTime();
+    <!-- Modal for video -->
+    <div id="video-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeVideo()">&times;</span>
+            <video controls>
+                <source src="video.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+    </div>
 
-const countdownInterval = setInterval(() => {
-    const now = new Date().getTime();
-    const distance = birthdayDate - now;
+    <!-- Lightbox for image -->
+    <div id="lightbox" class="lightbox">
+        <span class="close-lightbox" onclick="closeLightbox()">&times;</span>
+        <img class="lightbox-content" id="lightbox-img">
+    </div>
 
-    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-    countdown.innerHTML = `Only ${days} days, ${hours} hours, ${minutes} minutes, and ${seconds} seconds left!`;
-
-    if (distance < 0) {
-        clearInterval(countdownInterval);
-        countdown.innerHTML = "It's Your Birthday! 🎉";
-    }
-}, 1000);
-
-function revealSecret() {
-    const pinCode = '1002'; // Your university day in a format without the dot
-    const enteredPin = document.getElementById('pinInput').value;
-
-    if (enteredPin === pinCode) {
-        document.getElementById('secretMessage').classList.remove('hidden');
-    } else {
-        alert("Код буруу байна!🙂‍↔ Арай санахгүй байгаа юм биш биз🤔");
-    }
-}
-// Start the countdown as soon as the page loads
-window.onload = function() {
-    countdown();
-};
+    <script src="script.js"></script>
+</body>
+</html>
